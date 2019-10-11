@@ -54,7 +54,7 @@ def click(event):
     print(obj_coords)
 
 
-
+l1=[]
 l_obj=[]
 obj_coords=[]
 new_ball()
