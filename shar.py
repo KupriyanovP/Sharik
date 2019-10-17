@@ -3,14 +3,7 @@ from random import randrange as rnd, choice
 import random
 import math
 import time
-root = Tk()
-root.geometry('800x600')
 
-canv = Canvas(root,bg='white')
-canv.pack(fill=BOTH,expand=1)
-label1 = Label(text="Количество очков: 0", fg="#eee", bg="#333")
-label1.pack()
-colors = ['red','orange','yellow','green','blue']
 
 def new_ball():
     global obj_coords,l_obj
@@ -23,7 +16,7 @@ def new_ball():
     obj_coords.append([x,y,r,vx,vy])
     a=canv.create_oval(x-r,y-r,x+r,y+r,fill = choice(colors), width=0)
     l_obj.append(a)
-    root.after(1000,new_ball)
+    root.after(3000,new_ball)
 
 
 def motion():
@@ -37,26 +30,39 @@ def motion():
         obj_coords[i][0]+=obj_coords[i][3]
         obj_coords[i][1] += obj_coords[i][4]
 
-    root.after(10, motion)
+    root.after(8, motion)
 
 def click(event):
-    global obj_coords, l_obj
-
-    print(event.x,event.y)
+    global obj_coords, l_obj, score, score_text
     li=[]
     for i in range(len(l_obj)):
         if math.sqrt((event.x-obj_coords[i][0])**2+(event.y-obj_coords[i][1])**2)<obj_coords[i][2]:
             canv.delete(l_obj[i])
             li.append(i)
+            canv.delete(score_text)
+            score+=1
+            score_text = canv.create_text(2, 0, text="Your Score: " + str(score), anchor=NW, font="Verdana 14")
     for j in li:
         obj_coords.pop(j)
         l_obj.pop(j)
-    print(obj_coords)
+
+
+
+root = Tk()
+root.geometry('800x600')
+
+canv = Canvas(root,bg='white')
+canv.pack(fill=BOTH,expand=1)
+colors = ['red','orange','yellow','green','blue']
+
+
 
 
 l1=[]
 l_obj=[]
 obj_coords=[]
+score=0
+score_text=canv.create_text(2, 0, text="Your Score: "+str(score), anchor=NW, font="Verdana 14")
 new_ball()
 motion()
 canv.bind('<Button-1>', click)
