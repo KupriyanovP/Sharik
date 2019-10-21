@@ -96,25 +96,29 @@ def timer():
 
 name = input("Enter your name: ")
 
-# canva
+# canvas
 root = Tk()
 root.geometry('800x600')
 canv = Canvas(root, bg='white')
 canv.pack(fill=BOTH, expand=1)
 colors = ['red', 'orange', 'yellow', 'green', 'blue']
-
+# lists of objekts and coords
 l_obj = []
 obj_coords = []
+# score and timer
 score = 0
 seconds = 0
 score_text = canv.create_text(2, 0, text="Your Score: " + str(score), anchor=NW, font="Verdana 14")
 timer_text = canv.create_text(800, 600, text="Time:" + str(seconds), anchor=SE, font="Verdana 14")
 time1 = time.perf_counter()
+# functions
 new_ball()
 motion()
 timer()
+# event handling
 canv.bind('<Button-1>', click)
 canv.bind_all('<space>', restart)
+
 mainloop()
 
 table()
